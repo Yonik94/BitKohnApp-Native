@@ -1,0 +1,27 @@
+{
+  "expo": {
+    "name": "bitkohnApp",
+    "slug": "bitkohnApp",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./app/assets/icons/icon.png",
+    "splash": {
+      "image": "./app/assets/icons/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "web": {
+      "favicon": "./app/assets/icons/favicon.png"
+    },
+    "description": ""
+  }
+}
