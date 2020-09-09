@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Platform, StyleSheet } from "react-native";
-import { connect, useDispatch, useSelector } from 'react-redux'
+import { connect, useDispatch, useSelector, useStore } from 'react-redux'
 import * as Contacts from 'expo-contacts';
 import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import { getContacts } from '../actions/UserActions';
+import { setContacts } from '../actions/UserActions';
 
 import { Filter } from '../components/Filter'
 import { ContactPreview } from '../components/ContactPreview'
-export const Contact = ({ navigation }) => {
-    const contacts = useSelector(state => state.contacts)
-    // const [contacts, setContacts] = useState([]);
+export const _Contact = ({ navigation, setContacts }) => {
+    const contacts = useSelector(state => state.contacts);
+    const dispatch = useDispatch()
+    // const state = useSelector(state => state)
+    // // const [contacts, setContacts] = useState([]);
     const [contactsToShow, setContactsToShow] = useState([])
     const [isLoading, setLoading] = useState(true);
     const [filterText, setFilterText] = useState('');
+
     const filterContacts = (str) => {
         const filteredContacts = contacts.filter(contact => {
             return (
@@ -24,30 +27,9 @@ export const Contact = ({ navigation }) => {
         })
         setContactsToShow(filteredContacts);
     }
-    const state = useSelector(state => state)
-    const dispatch = useDispatch()
-    getContacts(dispatch)
-    
-    useEffect(() => {       
-        // if (contacts.length > 0) return;
-        // (async () => {
-        //     if (Platform.OS !== 'android') return
-        //     const { status } = await Contacts.requestPermissionsAsync();
-        //     if (status === 'granted') {
-        //         const { data } = await Contacts.getContactsAsync({
-        //             fields: [Contacts.Fields.PhoneNumbers],
-        //         });
-        //         const contactsToUpdate = [];
-        //         if (data.length > 0) {
-        //             data.forEach(contact => {
-        //                 if (contact.phoneNumbers && contact.phoneNumbers[0].number) {
-        //                     contactsToUpdate.push(contact)
-        //                 }
-        //             });
-        //             setContacts(contactsToUpdate);
-        //         }
-        //     }
-        // })();
+
+    useEffect(() => {
+        setContacts(Platform.OS)
     }, []);
 
     useEffect(() => {
@@ -130,7 +112,26 @@ const mapStateProps = state => {
     }
 }
 const mapDispatchToProps = {
-    getContacts
+    setContacts
 }
 
-// export const Contact = connect(mapStateProps, mapDispatchToProps)(_Contact);
+export const Contact = connect(mapStateProps, mapDispatchToProps)(_Contact);
+// if (contacts.length > 0) return;
+        // (async () => {
+        //     if (Platform.OS !== 'android') return
+        //     const { status } = await Contacts.requestPermissionsAsync();
+        //     if (status === 'granted') {
+        //         const { data } = await Contacts.getContactsAsync({
+        //             fields: [Contacts.Fields.PhoneNumbers],
+        //         });
+        //         const contactsToUpdate = [];
+        //         if (data.length > 0) {
+        //             data.forEach(contact => {
+        //                 if (contact.phoneNumbers && contact.phoneNumbers[0].number) {
+        //                     contactsToUpdate.push(contact)
+        //                 }
+        //             });
+        //             setContacts(contactsToUpdate);
+        //         }
+        //     }
+        // })();

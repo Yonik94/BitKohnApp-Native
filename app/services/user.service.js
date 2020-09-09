@@ -1,5 +1,7 @@
 import { utilService } from './util.service';
 import { AsyncStorage } from 'react-native';
+import * as Contacts from 'expo-contacts';
+
 const users = [
     {
         "_id": '123',
@@ -18,7 +20,9 @@ export const userService = {
     login,
     createUser,
     getUserById,
-    makeTransfer
+    makeTransfer,
+    getContacts,
+    getLoggedInUser
 }
 
 function getUser(phone) {
@@ -31,7 +35,8 @@ function getUser(phone) {
 async function login(user) {
     const currUser = await getUser(user.phone);
     if (currUser && user.password === currUser.password) {
-        AsyncStorage.setItem('loggedInUser', currUser._id);
+        console.log({currUser});
+        await AsyncStorage.setItem('loggedInUser', currUser._id);
         return Promise.resolve(true);
     } else {
         return Promise.resolve(false);
@@ -60,7 +65,7 @@ async function createUser(user, isRegister, isLogin) {
         users.push(regUser);
     }
     if (isLogin) AsyncStorage.setItem('loggedInUser', regUser._id);
-    console.log({regUser});
+    console.log({ regUser });
     return Promise.resolve(regUser);
 }
 
@@ -72,7 +77,7 @@ function getUserById(id) {
 }
 
 async function makeTransfer(userId, amount, contact) {
-    console.log({contact});
+    console.log({ contact });
     let toUser = await getUser(contact.phone);
     const fromUser = await getUserById(userId);
     if (fromUser.amount < amount) return Promise.reject(`Transfer up to $${fromUser.amount}`)
@@ -99,4 +104,25 @@ async function addTransaction(fromUserId, contact, amount) {
     }
     fromUser.transactions.push(newTrans)
     toUser.transactions.push(newTrans)
+}
+
+async function getContacts(platform) {
+    if (platform !== 'android') return []
+    const { status } = await Contacts.requestPermissionsAsync();
+    if (status === 'granted') {
+        const { data } = await Contacts.getContactsAsync({
+            fields: [Contacts.Fields.PhoneNumbers],
+        });
+        if (data.length > 0) {
+            const contacts = data.filter(contact => contact.phoneNumbers && contact.phoneNumbers[0].number);
+            return contacts
+        }
+    }
+}
+
+async function getLoggedInUser(getLoggedInUser) {
+    const user = await getLoggedInUser('loggedInUser')
+    console.log({user});
+    return user ? user : undefined
+
 }

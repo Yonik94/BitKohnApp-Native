@@ -1,12 +1,13 @@
 //Importing needed modules:
 import React, { useState, useEffect } from 'react';
 import { View, Button, Text, StyleSheet, AsyncStorage } from 'react-native';
+import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 
 //Importing components:
 import { ControllerBtns } from '../components/ControllerBtns'
 import { Transactions } from '../components/Transactions'
 import { userService } from '../services/user.service';
-import { TouchableNativeFeedback, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+
 
 export const HomeScreen = (props) => {
     const [username, setUsername] = useState({});
@@ -15,11 +16,14 @@ export const HomeScreen = (props) => {
     useEffect(() => {
         (async () => {
             const userId = await AsyncStorage.getItem('loggedInUser');
+            console.log({userId});
             const loggedInUser = await userService.getUserById(userId);
+            console.log({loggedInUser});
             setUsername({ ...username, firstName: loggedInUser.firstName, lastName: loggedInUser.lastName });
             setTransactions(loggedInUser.transactions);
         })()
-    })
+    }, [])
+
     return (
         <View style={styles.homeScreen}>
             <View style={styles.headerContainer}>

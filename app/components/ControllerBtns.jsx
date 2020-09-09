@@ -7,6 +7,9 @@ export const ControllerBtns = (props) => {
     const navigateToContacts = () => {
         props.navigation.navigate('Contact')
     }
+    const navigateToTransfer = () => {
+        props.navigation.navigate('Transfers')
+    }
 
     return (
         <View>
@@ -16,6 +19,14 @@ export const ControllerBtns = (props) => {
                         <Image style={styles.sendIcon} source={require('../assets/icons/send.png')} />
                     </View>
                     <Text style={{ color: 'white', textAlign: 'center' }}>Send</Text>
+                </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={navigateToTransfer}>
+                <View style={styles.sendMoney}>
+                    <View style={styles.sendMoneyImage}>
+                        <Image style={styles.sendIcon} source={require('../assets/icons/send.png')} />
+                    </View>
+                    <Text style={{ color: 'white', textAlign: 'center' }}>Transfer</Text>
                 </View>
             </TouchableWithoutFeedback>
         </View>

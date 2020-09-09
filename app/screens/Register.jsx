@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { connect } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
 import { View, Text, StyleSheet, SafeAreaView, AsyncStorage } from "react-native";
 import { TouchableNativeFeedback } from "react-native-gesture-handler";
 import {
@@ -11,15 +11,18 @@ import {
 
 //Import services
 import { userService } from '../services/user.service';
+import { setLoggedInUser } from '../actions/UserActions';
+
 
 //Import components:
 import { PersonalDetailsRegister } from '../components/PersonalDetailsRegister'
+// import { NumberInputs } from '../components/NumberInput'
 
 
-
-const _Register = ({ navigation, store }) => {
+export const Register = ({ navigation, store }) => {
     const [isOnPassword, setIsPassword] = useState(false);
     const [isOnPersonalDetails, setIsPersonal] = useState(false);
+    //Login / Register settings and state:
     const CELL_COUNT = isOnPassword ? 4 : 10;
     const [enableMask, setEnableMask] = useState(false);
     const [value, setValue] = useState('');
@@ -28,17 +31,20 @@ const _Register = ({ navigation, store }) => {
         value,
         setValue,
     });
-    const [user, setUser] = useState({})
     const toggleMask = () => setEnableMask(f => !f);
 
-    (async () => {
-        const loggedInUser = await AsyncStorage.getItem('loggedInUser')
-        loggedInUser ? navigation.navigate('Home') : navigation.navigate('Register');
-      })()
+    const [user, setUser] = useState({});
+    const loggedInUser = useSelector(state => state.loggedInUser);
+    const dispatch = useDispatch()
+
+
+    const getLoggedInUser = AsyncStorage.getItem;
+    dispatch(setLoggedInUser(AsyncStorage.getItem))
+        .then(loggedInUser ?
+            navigation.navigate('Home') : navigation.navigate('Register'));
 
     useEffect(() => {
         (async () => {
-
             if (!isOnPassword && !isOnPersonalDetails && value.length === 10) {
                 setIsPassword(true);
                 setEnableMask(true);
@@ -60,7 +66,8 @@ const _Register = ({ navigation, store }) => {
             }
         })()
     }, [user])
-    const onGoToNextBtn = () => {
+
+    const onNextBtn = () => {
         if (!isOnPassword && value.length === 10) {
             setUser({ ...user, phone: value });
         } else if (isOnPassword && value.length === 4) {
@@ -77,7 +84,6 @@ const _Register = ({ navigation, store }) => {
 
     const renderCell = ({ index, symbol, isFocused }) => {
         let textChild = null;
-
         if (symbol) {
             textChild = enableMask ? '•' : symbol;
         } else if (isFocused) {
@@ -102,6 +108,7 @@ const _Register = ({ navigation, store }) => {
             {isOnPersonalDetails &&
                 <Text style={styles.title}>Enter your personal details</Text>}
             {!isOnPersonalDetails && <View style={styles.fieldRow}>
+                {/* <NumberInputs cells={10} isSecure={false}/> */}
                 <CodeField
                     ref={ref}
                     {...props}
@@ -116,7 +123,7 @@ const _Register = ({ navigation, store }) => {
                     {enableMask ? '🙈' : '🐵'}
                 </Text>}
             </View>}
-            {!isOnPersonalDetails && <TouchableNativeFeedback onPress={onGoToNextBtn}>
+            {!isOnPersonalDetails && <TouchableNativeFeedback onPress={onNextBtn}>
                 <View style={styles.verificationBtn}>
                     <Text style={{ fontSize: 20, color: 'white' }}>Next</Text>
                 </View>
@@ -237,4 +244,4 @@ const mapStateProps = state => {
     }
 }
 
-export const Register = connect(mapStateProps)(_Register);
+// export const Register = connect(mapStateProps)(_Register);

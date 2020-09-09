@@ -1,19 +1,20 @@
 const INITIAL_STATE = {
+    loggedInUser: null,
     contacts: null,
-    user: null
 }
 export default function userReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
-        case 'GET_USER':
+        case 'SET_USER':
             return {
                 ...state,
-                user: action.user
+                loggedInUser: action.user
             }
-        case 'GET_CONTACTS':
+        case 'SET_CONTACTS':
             return {
                 ...state,
                 contacts: action.contacts
             }
-            default: return state
+        default:
+            return state
     }
 };
