@@ -1,44 +1,27 @@
 import React, { useState, useEffect } from 'react'
-import { connect, useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { View, Text, StyleSheet, SafeAreaView, AsyncStorage } from "react-native";
-import { TouchableNativeFeedback } from "react-native-gesture-handler";
-import {
-    CodeField,
-    Cursor,
-    useBlurOnFulfill,
-    useClearByFocusCell,
-} from 'react-native-confirmation-code-field';
 
 //Import services
 import { userService } from '../services/user.service';
 import { setLoggedInUser } from '../actions/UserActions';
+import { NextBtn } from '../components/NextBtn';
 
 
 //Import components:
-import { PersonalDetailsRegister } from '../components/PersonalDetailsRegister'
-// import { NumberInputs } from '../components/NumberInput'
-
-
-export const Register = ({ navigation, store }) => {
+import { PersonalDetailsRegister } from '../components/PersonalDetailsRegister';
+import { NumberInput } from '../components/NumberInput'
+export const Register = ({ navigation }) => {
+    const dispatch = useDispatch()
     const [isOnPassword, setIsPassword] = useState(false);
     const [isOnPersonalDetails, setIsPersonal] = useState(false);
-    //Login / Register settings and state:
-    const CELL_COUNT = isOnPassword ? 4 : 10;
-    const [enableMask, setEnableMask] = useState(false);
-    const [value, setValue] = useState('');
-    const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
-    const [props, getCellOnLayoutHandler] = useClearByFocusCell({
-        value,
-        setValue,
-    });
-    const toggleMask = () => setEnableMask(f => !f);
 
+    //Login / Register settings and state:
+    const [value, setValue] = useState('');
     const [user, setUser] = useState({});
     const loggedInUser = useSelector(state => state.loggedInUser);
-    const dispatch = useDispatch()
 
-
-    const getLoggedInUser = AsyncStorage.getItem;
+    // const getLoggedInUser = AsyncStorage.getItem;
     dispatch(setLoggedInUser(AsyncStorage.getItem))
         .then(loggedInUser ?
             navigation.navigate('Home') : navigation.navigate('Register'));
@@ -47,7 +30,6 @@ export const Register = ({ navigation, store }) => {
         (async () => {
             if (!isOnPassword && !isOnPersonalDetails && value.length === 10) {
                 setIsPassword(true);
-                setEnableMask(true);
                 setValue('');
             } else if (isOnPassword && !isOnPersonalDetails && value.length === 4) {
                 const isRegistered = await userService.getUser(user.phone);
@@ -58,7 +40,6 @@ export const Register = ({ navigation, store }) => {
                     setIsPersonal(true);
                 }
                 setIsPassword(false);
-                setEnableMask(false);
                 setValue('');
             } else if (user.firstName && user.lastName) {
                 userService.createUser(user, true, true);
@@ -82,23 +63,6 @@ export const Register = ({ navigation, store }) => {
         setUser({ ...user, firstName, lastName });
     }
 
-    const renderCell = ({ index, symbol, isFocused }) => {
-        let textChild = null;
-        if (symbol) {
-            textChild = enableMask ? '•' : symbol;
-        } else if (isFocused) {
-            textChild = <Cursor />;
-        }
-        return (
-            <Text
-                key={index}
-                style={[styles.cell, isFocused && styles.focusCell]}
-                onLayout={getCellOnLayoutHandler(index)}>
-                {textChild}
-            </Text>
-        );
-    };
-
     return (
         <SafeAreaView style={styles.root}>
             {isOnPassword && !isOnPersonalDetails &&
@@ -108,140 +72,25 @@ export const Register = ({ navigation, store }) => {
             {isOnPersonalDetails &&
                 <Text style={styles.title}>Enter your personal details</Text>}
             {!isOnPersonalDetails && <View style={styles.fieldRow}>
-                {/* <NumberInputs cells={10} isSecure={false}/> */}
-                <CodeField
-                    ref={ref}
-                    {...props}
-                    value={value}
-                    onChangeText={setValue}
-                    cellCount={CELL_COUNT}
-                    keyboardType="number-pad"
-                    textContentType="oneTimeCode"
-                    renderCell={renderCell}
-                />
-                {isOnPassword && <Text style={styles.toggle} onPress={toggleMask}>
-                    {enableMask ? '🙈' : '🐵'}
-                </Text>}
+            {!isOnPassword && !isOnPersonalDetails && <NumberInput
+                isSecure={ false }
+                cellsCount={ 10 }
+                setValue={setValue} />}
+                {isOnPassword && !isOnPersonalDetails &&<NumberInput
+                isSecure={true}
+                cellsCount={4}
+                setValue={setValue} />}
             </View>}
-            {!isOnPersonalDetails && <TouchableNativeFeedback onPress={onNextBtn}>
-                <View style={styles.verificationBtn}>
-                    <Text style={{ fontSize: 20, color: 'white' }}>Next</Text>
-                </View>
-            </TouchableNativeFeedback>}
+            {!isOnPersonalDetails && <NextBtn onPress={onNextBtn}/>}
             {isOnPersonalDetails && <PersonalDetailsRegister newAccount={createNewAcount} />}
         </SafeAreaView>
     );
 };
+
 const styles = StyleSheet.create({
     root: {
         flex: 1, justifyContent: 'space-evenly',
         alignItems: 'center',
     },
     title: { textAlign: 'center', fontSize: 30 },
-    fieldRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    cell: {
-        width: 30,
-        height: 30,
-        lineHeight: 30,
-        fontSize: 20,
-        fontWeight: '700',
-        textAlign: 'center',
-        marginLeft: 8,
-        borderRadius: 6,
-        backgroundColor: '#d0d0d0',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    toggle: {
-        width: 55,
-        height: 55,
-        lineHeight: 55,
-        fontSize: 24,
-        textAlign: 'center',
-    },
-    focusCell: {
-        borderColor: '#000',
-    },
-    verificationBtn: {
-        padding: 20,
-        backgroundColor: '#d32733',
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
 })
-//     const [isOnPassword, setAsPassword] = useState(true)
-//     const CELL_COUNT = isOnPassword ? 4 : 10;
-//     const [value, setValue] = useState('');
-//     const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
-//     const [props, getCellOnLayoutHandler] = useClearByFocusCell({
-//         value,
-//         setValue,
-//     });
-//     return (
-//         <SafeAreaView style={styles.root}>
-//             {isOnPassword && <Text style={styles.title}>Enter your paswword</Text>}
-//             {!isOnPassword && <Text style={styles.title}>Enter your phone number</Text>}
-//             <CodeField
-//                 ref={ref}
-//                 {...props}
-//                 value={value}
-//                 onChangeText={setValue}
-//                 cellCount={CELL_COUNT}
-//                 rootStyle={styles.codeFieldRoot}
-//                 keyboardType="number-pad"
-//                 textContentType="oneTimeCode"
-//                 secureTextEntry
-//                 renderCell={({ index, symbol, isFocused }) => (
-//                     <Text
-//                         key={index}
-//                         style={[styles.cell,
-//                         isFocused && styles.focusCell]}
-//                         onLayout={getCellOnLayoutHandler(index)}>
-//                         {symbol || (isFocused ? <Cursor /> : null)}
-//                     </Text>
-//                 )}
-//             />
-//             <TouchableNativeFeedback>
-//                 <View style={styles.verificationBtn}>
-//                     <Text style={{ fontSize: 20, color: 'white' }}>Send me verification message</Text>
-//                 </View>
-//             </TouchableNativeFeedback>
-//         </SafeAreaView>
-//     )
-// }
-// const styles = StyleSheet.create({
-//     root: { flex: 1, padding: 20, justifyContent: 'space-around', alignItems: 'center' },
-//     title: { textAlign: 'center', fontSize: 30, marginBottom: 30, },
-//     // codeFieldRoot: { marginTop: 20 },
-//     cell: {
-//         width: 30,
-//         height: 40,
-//         lineHeight: 38,
-//         fontSize: 24,
-//         borderBottomWidth: 2,
-//         borderColor: '#00000030',
-//         textAlign: 'center',
-//         marginBottom: 100,
-//     },
-//     focusCell: {
-//         borderColor: '#000',
-//     },
-// verificationBtn: {
-//     padding: 20,
-//     backgroundColor: '#d32733',
-//     justifyContent: 'center',
-//     alignItems: 'center'
-// }
-// });
-
-const mapStateProps = state => {
-    return {
-        state
-    }
-}
-
-// export const Register = connect(mapStateProps)(_Register);

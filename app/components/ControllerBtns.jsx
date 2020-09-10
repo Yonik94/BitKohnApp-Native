@@ -21,14 +21,6 @@ export const ControllerBtns = (props) => {
                     <Text style={{ color: 'white', textAlign: 'center' }}>Send</Text>
                 </View>
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={navigateToTransfer}>
-                <View style={styles.sendMoney}>
-                    <View style={styles.sendMoneyImage}>
-                        <Image style={styles.sendIcon} source={require('../assets/icons/send.png')} />
-                    </View>
-                    <Text style={{ color: 'white', textAlign: 'center' }}>Transfer</Text>
-                </View>
-            </TouchableWithoutFeedback>
         </View>
     );
 }

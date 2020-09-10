@@ -4,12 +4,12 @@ import { TextInput, TouchableNativeFeedback } from 'react-native-gesture-handler
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { userService } from '../services/user.service'
+import { useSelector } from 'react-redux';
 export const Transfers = ({ route, navigation }) => {
-    const contactName = (route.params && route.params.contact) ?
-    route.params.contact.name : 'Yoni'
+    const contactName = route.params.contact.name;
     const [amount, setAmount] = useState('');
     const [password, setPassword] = useState('');
-    const [isOnConfirm, setConfirmation] = useState(false)
+    const [isOnConfirm, setConfirmation] = useState(false);
     const makeTransfer = async () => {
         if (!isOnConfirm) {
             if (amount) {
@@ -56,9 +56,6 @@ export const Transfers = ({ route, navigation }) => {
                             onChangeText={text => setAmount(text)}></TextInput>
                         <TouchableNativeFeedback onPress={makeTransfer}>
                             <Text style={[styles.text, styles.button]}>Make a transfer</Text>
-                        </TouchableNativeFeedback>
-                        <TouchableNativeFeedback onPress={() => navigation.navigate('Contact')}>
-                            <Text style={[styles.text, styles.button]}>Go to contacts</Text>
                         </TouchableNativeFeedback>
                     </View>}
                 {isOnConfirm &&

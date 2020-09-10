@@ -7,7 +7,7 @@ import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import { ControllerBtns } from '../components/ControllerBtns'
 import { Transactions } from '../components/Transactions'
 import { userService } from '../services/user.service';
-
+import { NumberInput } from '../components/NumberInput'
 
 export const HomeScreen = (props) => {
     const [username, setUsername] = useState({});
@@ -16,9 +16,7 @@ export const HomeScreen = (props) => {
     useEffect(() => {
         (async () => {
             const userId = await AsyncStorage.getItem('loggedInUser');
-            console.log({userId});
             const loggedInUser = await userService.getUserById(userId);
-            console.log({loggedInUser});
             setUsername({ ...username, firstName: loggedInUser.firstName, lastName: loggedInUser.lastName });
             setTransactions(loggedInUser.transactions);
         })()

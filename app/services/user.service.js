@@ -35,7 +35,6 @@ function getUser(phone) {
 async function login(user) {
     const currUser = await getUser(user.phone);
     if (currUser && user.password === currUser.password) {
-        console.log({currUser});
         await AsyncStorage.setItem('loggedInUser', currUser._id);
         return Promise.resolve(true);
     } else {
@@ -65,7 +64,6 @@ async function createUser(user, isRegister, isLogin) {
         users.push(regUser);
     }
     if (isLogin) AsyncStorage.setItem('loggedInUser', regUser._id);
-    console.log({ regUser });
     return Promise.resolve(regUser);
 }
 
@@ -77,7 +75,6 @@ function getUserById(id) {
 }
 
 async function makeTransfer(userId, amount, contact) {
-    console.log({ contact });
     let toUser = await getUser(contact.phone);
     const fromUser = await getUserById(userId);
     if (fromUser.amount < amount) return Promise.reject(`Transfer up to $${fromUser.amount}`)
@@ -122,7 +119,6 @@ async function getContacts(platform) {
 
 async function getLoggedInUser(getLoggedInUser) {
     const user = await getLoggedInUser('loggedInUser')
-    console.log({user});
     return user ? user : undefined
 
 }
