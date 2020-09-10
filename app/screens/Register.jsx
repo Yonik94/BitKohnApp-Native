@@ -82,8 +82,9 @@ export const Register = ({ navigation }) => {
                 {isOnPersonalDetails &&
                     <Text style={styles.title}>Enter your personal details</Text>}
             </View>
-            {!isOnPersonalDetails && <View>
+            {!isOnPersonalDetails && <View style={{marginBottom: 50}}>
                 {!isOnPassword && !isOnPersonalDetails && <NumberInput
+                
                 isSecure={false}
                 cellsCount={10}
                 setValue={setValue} />}
@@ -104,8 +105,7 @@ export const Register = ({ navigation }) => {
 const styles = StyleSheet.create({
     root: {
         flex: 1,
-        justifyContent: 'space-evenly',
         backgroundColor: '#fff'
     },
-    title: { textAlign: 'center', fontSize: 30 },
+    title: { textAlign: 'center', fontSize: 30, marginVertical: 50 },
 })
