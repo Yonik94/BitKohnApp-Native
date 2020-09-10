@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { View, Text, StyleSheet, SafeAreaView, AsyncStorage } from "react-native";
+import { LinearGradient } from 'expo-linear-gradient';
 
 //Import services
 import { userService } from '../services/user.service';
@@ -64,33 +65,47 @@ export const Register = ({ navigation }) => {
     }
 
     return (
-        <SafeAreaView style={styles.root}>
-            {isOnPassword && !isOnPersonalDetails &&
-                <Text style={styles.title}>Enter your password</Text>}
-            {!isOnPassword && !isOnPersonalDetails &&
-                <Text style={styles.title}>Enter your phone number</Text>}
-            {isOnPersonalDetails &&
-                <Text style={styles.title}>Enter your personal details</Text>}
-            {!isOnPersonalDetails && <View style={styles.fieldRow}>
-            {!isOnPassword && !isOnPersonalDetails && <NumberInput
-                isSecure={ false }
-                cellsCount={ 10 }
+        <SafeAreaView style={{flex: 1}}>
+            <LinearGradient
+                style={[{
+                    flex: 1,
+                    paddingVertical: 20,
+                }, styles.root]}
+                colors={['rgba(54,106,146,0.8)', 'rgba(100,60,170,0.6)']}
+                start={[0.5, 0.7]}
+                end={[0.7, 1]}>
+            <View>
+                {isOnPassword && !isOnPersonalDetails &&
+                    <Text style={styles.title}>Enter your password</Text>}
+                {!isOnPassword && !isOnPersonalDetails &&
+                    <Text style={styles.title}>Enter your phone number</Text>}
+                {isOnPersonalDetails &&
+                    <Text style={styles.title}>Enter your personal details</Text>}
+            </View>
+            {!isOnPersonalDetails && <View>
+                {!isOnPassword && !isOnPersonalDetails && <NumberInput
+                isSecure={false}
+                cellsCount={10}
                 setValue={setValue} />}
-                {isOnPassword && !isOnPersonalDetails &&<NumberInput
-                isSecure={true}
-                cellsCount={4}
-                setValue={setValue} />}
+                {isOnPassword && !isOnPersonalDetails && <NumberInput
+                    isSecure={true}
+                    cellsCount={4}
+                    setValue={setValue} />}
             </View>}
-            {!isOnPersonalDetails && <NextBtn onPress={onNextBtn}/>}
+            {!isOnPersonalDetails && <View style={{ alignItems: 'center' }}>
+                <NextBtn onPress={onNextBtn} />
+            </View>}
             {isOnPersonalDetails && <PersonalDetailsRegister newAccount={createNewAcount} />}
+            </LinearGradient>
         </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
     root: {
-        flex: 1, justifyContent: 'space-evenly',
-        alignItems: 'center',
+        flex: 1,
+        justifyContent: 'space-evenly',
+        backgroundColor: '#fff'
     },
     title: { textAlign: 'center', fontSize: 30 },
 })

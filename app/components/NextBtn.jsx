@@ -13,8 +13,9 @@ export const NextBtn = (props) => {
 const styles = StyleSheet.create({
     nextBtn: {
         padding: 20,
+        width: 200,
         backgroundColor: '#d32733',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     }
 })

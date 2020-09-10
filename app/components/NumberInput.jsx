@@ -1,6 +1,7 @@
 import React, { useState, useEffect, } from 'react';
-import { View, StyleSheet, } from 'react-native';
+import { View, StyleSheet, Platform, } from 'react-native';
 import { TextInput, FlatList, } from 'react-native-gesture-handler';
+import * as Localization from 'expo-localization';
 
 export const NumberInput = (props) => {
     const [inputValue, setInputValue] = useState(new Array(props.cellsCount));
@@ -14,7 +15,6 @@ export const NumberInput = (props) => {
     useEffect(() => {
         if (inputValue[props.cellsCount - 1]) {
             const value = inputValue.join('')
-                console.log({ value });
                 props.setValue(value)
         }
     }, [inputValue])
@@ -36,8 +36,6 @@ export const NumberInput = (props) => {
                 onChangeText={text => onChangeValue(text, index)}
                 maxLength={1}
                 keyboardType={"number-pad"}
-                blurOnSubmit={false}
-                autoFocus={true}
                 ref={(input) => inputsRefs[index] = input}
             />)
     }
@@ -55,15 +53,17 @@ export const NumberInput = (props) => {
 const styles = StyleSheet.create({
     inputContainer: {
         justifyContent: 'center',
-        flexDirection: 'row',
+        flexDirection: Localization.isRTL ? 'row-reverse' : 'row',
+        backgroundColor: 'transparent'
     },
-
+    
     input: {
         borderWidth: 1,
         borderColor: 'black',
         width: 30,
         height: 30,
         marginRight: 10,
-        textAlign: 'center'
+        textAlign: 'center',
+        backgroundColor: 'rgb(255,255,255)'
     }
 })

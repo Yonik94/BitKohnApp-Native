@@ -5,7 +5,7 @@ import { TextInput, TouchableNativeFeedback } from 'react-native-gesture-handler
 export const PersonalDetailsRegister = (props) => {
     const [userDetails, setDetails] = useState({firstName: '', lastName: ''});
     return (
-        <View>
+        <View style={{paddingHorizontal: 20}}>
             <TextInput
             value={userDetails.firstName}
             placeholder={'First Name'}
