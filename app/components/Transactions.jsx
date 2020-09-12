@@ -13,7 +13,7 @@ export const Transactions = (props) => {
     }
     return (
         <View>
-            <Text style={[styles.text, {marginBottom: 10, marginTop: 10}]}>
+            <Text style={[styles.text, {marginVertical: 10}]}>
                 BitKohn status:
                 </Text>
             <FlatList
@@ -34,6 +34,7 @@ export const Transactions = (props) => {
 
 const styles = StyleSheet.create({
     text: {
-        color: 'white'
+        color: 'white',
+        fontSize: 20
     },
 })

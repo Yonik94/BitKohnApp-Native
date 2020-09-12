@@ -14,10 +14,10 @@ export const Transfers = ({ route, navigation }) => {
         if (!isOnConfirm) {
             if (amount) {
                 setConfirmation(true);
-            }else {
+            } else {
                 alert('Enter amount');
             }
-        } 
+        }
         else {
             const userId = await AsyncStorage.getItem('loggedInUser');
             try {
@@ -35,7 +35,7 @@ export const Transfers = ({ route, navigation }) => {
     const sendSMS = async () => {
         const isAvailable = await SMS.isAvailableAsync();
         if (isAvailable) {
-            const {result } = await SMS.sendSMSAsync(
+            const { result } = await SMS.sendSMSAsync(
                 [route.params.contact.phone],
                 `Hi ${route.params.contact.name},
                 you got $${amount} in BitKohn App.
@@ -50,13 +50,15 @@ export const Transfers = ({ route, navigation }) => {
     return (
         <View style={styles.transferScreen}>
             <LinearGradient
-                style={{ flex: 1,
+                style={{
+                    flex: 1,
                     paddingHorizontal: 20,
-                    paddingVertical: 20, 
-                    alignItems: 'center' }}
-                colors={['rgba(54,106,146,0.8)', 'rgba(100,60,170,0.6)']}
-                start={[0.5, 0.7]}
-                end={[0.7, 1]}>
+                    paddingVertical: 20,
+                    alignItems: 'center'
+                }}
+                colors={['rgba(54, 106, 160, 0.9)', 'rgba(100, 60, 170, 0.6)']}
+                start={[0.6, 0.7]}
+                end={[1, 1]}>
                 {!isOnConfirm &&
                     <View>
                         <Text style={styles.text}>Transfer to {contactName}</Text>
@@ -68,7 +70,7 @@ export const Transfers = ({ route, navigation }) => {
                             placeholder={`0.00`}
                             style={styles.textInput}
                             caretHidden={true}
-                            
+
                             onChangeText={text => setAmount(text)}></TextInput>
                         <TouchableNativeFeedback onPress={makeTransfer}>
                             <Text style={[styles.text, styles.button]}>Make a transfer</Text>
@@ -118,9 +120,10 @@ const styles = StyleSheet.create({
     button: {
         width: '100%',
         borderRadius: 5,
-        backgroundColor: 'rgb(0,80,130)',
-        paddingVertical: 5,
+        backgroundColor: 'rgb(0,0,200)',
+        paddingVertical: 10,
+        paddingHorizontal: 5,
         textAlign: 'center',
         marginBottom: 20,
-        }
+    }
 })

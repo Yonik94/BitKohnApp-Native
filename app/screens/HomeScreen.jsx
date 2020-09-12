@@ -1,13 +1,15 @@
 //Importing needed modules:
 import React, { useState, useEffect } from 'react';
-import { View, Button, Text, StyleSheet, AsyncStorage } from 'react-native';
+import { View, Text, StyleSheet, AsyncStorage, Image } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
+import * as Localization from 'expo-localization';
+import { LinearGradient } from 'expo-linear-gradient';
 
 //Importing components:
 import { ControllerBtns } from '../components/ControllerBtns'
 import { Transactions } from '../components/Transactions'
 import { userService } from '../services/user.service';
-import { NumberInput } from '../components/NumberInput'
+import { MainHeader } from '../components/MainHeader';
 
 export const HomeScreen = (props) => {
     const [username, setUsername] = useState({});
@@ -24,29 +26,36 @@ export const HomeScreen = (props) => {
 
     return (
         <View style={styles.homeScreen}>
-            <View style={styles.headerContainer}>
+            <LinearGradient
+                colors={['rgba(40,117,160,1)', 'rgba(26,128,133,1)']}
+                start={[0.7, 0.1]}
+                end={[0.9, 1]}
+            >
+                <MainHeader />
+                <View style={styles.headerContainer}>
                     <View style={styles.profileContainer}>
                         <Text style={styles.text}>
                             Welcome {username.firstName} {username.lastName}
                         </Text>
-                        <TouchableNativeFeedback>
-                            <Text style={styles.text}>
-                                Show your profile
-                        </Text>
-                        </TouchableNativeFeedback>
                     </View>
                     <TouchableNativeFeedback>
-                        <Text style={styles.text}>
-                            settings
-                    </Text>
+                        <Image style={styles.settingsIcon} source={require('../assets/icons/settings.png')} />
                     </TouchableNativeFeedback>
-            </View>
-            <View style={styles.controllerBtns}>
-                <ControllerBtns navigation={props.navigation} />
-            </View>
-            <View style={styles.transactions}>
-                <Transactions transactions={transactions} />
-            </View>
+                </View>
+                <View style={styles.controllerBtns}>
+                    <ControllerBtns navigation={props.navigation} />
+                </View>
+            </LinearGradient>
+            <LinearGradient
+                style={{ flex: 1, width: '100%', paddingRight: 20, paddingLeft: 20 }}
+                colors={['rgba(10,107,123,0.9)', 'rgba(44,82,120,0.9)']}
+                start={[0.9, 0.1]}
+                end={[1, 1]}
+            >
+                <View style={styles.transactions}>
+                    <Transactions transactions={transactions} />
+                </View>
+            </LinearGradient>
         </View>
     );
 }
@@ -57,29 +66,25 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     text: {
-        color: 'white'
+        color: 'white',
+        fontSize: 20,
     },
     headerContainer: {
-        flexDirection: 'row',
+        flexDirection: Localization.isRTL ? 'row-reverse' : 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: 'linear-gradient(90deg, rgba(26,128,133,1) 27%, rgba(40,117,137,1) 79%)',
-        paddingTop: 10,
-        paddingBottom: 10,
-        paddingLeft: 10,
-        paddingRight: 10,
+        paddingHorizontal: 10,
+        paddingVertical: 10,
     },
     controllerBtns: {
-        paddingLeft: 10,
-        paddingRight: 10,
-        paddingTop: 20,
-        paddingBottom: 20,
-        backgroundColor: 'linear-gradient(90deg, rgba(26,128,133,1) 27%, rgba(40,117,137,1) 79%)',
+        paddingVertical: 20,
+        paddingHorizontal: 10,
     },
     transactions: {
         flex: 1,
-        paddingLeft: 10,
-        paddingRight: 10,
-        backgroundColor: 'linear-gradient(90deg, rgba(10,107,123,1) 24%, rgba(44,82,129,1) 43%)',
-    }
+    },
+    settingsIcon: {
+        width: 30,
+        height: 30,
+    },
 })

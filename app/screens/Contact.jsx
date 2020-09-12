@@ -45,9 +45,9 @@ export const Contact = ({ navigation }) => {
         <View style={styles.contactScreen}>
             <LinearGradient
                 style={{ flex: 1, width: '100%', paddingRight: 20, paddingLeft: 20 }}
-                colors={['rgba(23,115,66,0.8)', 'rgba(44,124,157,0.8)']}
-                start={[0.4, 0.6]}
-                end={[0.7, 1]}
+                colors={['rgba(44,124,157,0.8)', 'rgba(23,115,66,0.8)']}
+                start={[0.8, 0.6]}
+                end={[1, 1]}
             >
                 <Filter setFilterText={setFilterText} />
                 {isLoading && <Text style={styles.text}>Loading...</Text>}

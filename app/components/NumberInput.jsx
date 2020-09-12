@@ -1,5 +1,5 @@
 import React, { useState, useEffect, } from 'react';
-import { View, StyleSheet, Platform, } from 'react-native';
+import { View, StyleSheet, } from 'react-native';
 import { TextInput, FlatList, } from 'react-native-gesture-handler';
 import * as Localization from 'expo-localization';
 
@@ -36,12 +36,13 @@ export const NumberInput = (props) => {
                 onChangeText={text => onChangeValue(text, index)}
                 maxLength={1}
                 keyboardType={"number-pad"}
+                autoFocus={index === 0 ? true : false}
                 ref={(input) => inputsRefs[index] = input}
             />)
     }
 
     return (
-        <View>
+        <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <FlatList
                 contentContainerStyle={styles.inputContainer}
                 data={inputValue}
@@ -60,9 +61,9 @@ const styles = StyleSheet.create({
     input: {
         borderWidth: 1,
         borderColor: 'black',
-        width: 30,
-        height: 30,
-        marginRight: 10,
+        width: 27,
+        height: 27,
+        marginRight: 5,
         textAlign: 'center',
         backgroundColor: 'rgb(255,255,255)',
         borderRadius: 5

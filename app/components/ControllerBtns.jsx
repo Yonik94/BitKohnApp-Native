@@ -1,48 +1,67 @@
 import React from 'react';
 import { View, StyleSheet, Image, Text } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import * as Localization from 'expo-localization';
 
 export const ControllerBtns = (props) => {
 
     const navigateToContacts = () => {
         props.navigation.navigate('Contact')
     }
-    const navigateToTransfer = () => {
-        props.navigation.navigate('Transfers')
-    }
-
     return (
-        <View>
+        <View style={styles.controllerBtnsContainer}>
             <TouchableWithoutFeedback onPress={navigateToContacts}>
-                <View style={styles.sendMoney}>
-                    <View style={styles.sendMoneyImage}>
-                        <Image style={styles.sendIcon} source={require('../assets/icons/send.png')} />
+                <View style={styles.btnContainer}>
+                    <View style={[styles.iconContainer, {backgroundColor: '#d32733'}]}>
+                        <Image style={styles.icon} source={require('../assets/icons/send.png')} />
                     </View>
-                    <Text style={{ color: 'white', textAlign: 'center' }}>Send</Text>
+                    <Text style={{ color: 'white', textAlign: 'center' }}>Send Money</Text>
+                </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={navigateToContacts}>
+                <View style={styles.btnContainer}>
+                    <View style={[styles.iconContainer, {backgroundColor: '#32ad42'}]}>
+                        <Image style={styles.icon} source={require('../assets/icons/ask.png')} />
+                    </View>
+                    <Text style={{ color: 'white', textAlign: 'center' }}>Ask Money</Text>
+                </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={navigateToContacts}>
+                <View style={styles.btnContainer}>
+                    <View style={[styles.iconContainer, {backgroundColor: '#429ac8'}]}>
+                        <Image style={styles.icon} source={require('../assets/icons/user.png')} />
+                    </View>
+                    <Text style={{ color: 'white', textAlign: 'center', }}>Edit Profile</Text>
                 </View>
             </TouchableWithoutFeedback>
         </View>
     );
 }
 const styles = StyleSheet.create({
-    sendMoney: {
-        width: 60,
-        height: 60,
+    controllerBtnsContainer: {
+        width: '100%',
+        flexDirection: Localization.isRTL ? 'row-reverse' : 'row',
         alignItems: 'center',
-        justifyContent: 'center'
+        height: 80,
     },
-    sendMoneyImage: {
-        backgroundColor: '#d32733',
+    btnContainer: {
+        width: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: 10,
+    },
+    iconContainer: {
         width: 40,
         height: 40,
         borderRadius: 40 / 2,
         alignItems: 'center',
         justifyContent: 'center',
+        marginBottom: 5,
     },
     btnText: {
         color: 'white',
     },
-    sendIcon: {
+    icon: {
         width: 20,
         height: 20,
     }
