@@ -14,12 +14,14 @@ export const Filter = (props) => {
 }
 const styles = StyleSheet.create({
     filterInput: {
-        paddingHorizontal: 20,
+        paddingHorizontal: 15,
         paddingVertical: 10,
         color: 'white',
-        fontSize: 20,
+        fontSize: 18,
+        fontFamily: 'Lato-Black',
         backgroundColor: 'rgba(255,255,255,0.1)',
         marginBottom: 20,
         marginTop: 20,
+        width: 300
     }
 })

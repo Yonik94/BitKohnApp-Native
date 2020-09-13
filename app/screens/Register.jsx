@@ -80,13 +80,13 @@ export const Register = ({ navigation }) => {
         } else if (isOnPassword && !isOnPersonalDetails) {
             setIsPassword(false);
         }
-    } 
+    }
 
     const title = () => {
         let title = ''
         if (isOnPassword && !isOnPersonalDetails) {
             title = 'Enter your password'
-        }else if (!isOnPassword && !isOnPersonalDetails) {
+        } else if (!isOnPassword && !isOnPersonalDetails) {
             title = 'Enter your phone number'
         } else if (isOnPersonalDetails) {
             title = 'Enter your personal details'
@@ -95,7 +95,7 @@ export const Register = ({ navigation }) => {
     }
 
     return (
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView style={{ flex: 1 }}>
             <LinearGradient
                 style={[{
                     flex: 1,
@@ -104,24 +104,24 @@ export const Register = ({ navigation }) => {
                 colors={['rgba(54,106,146,0.8)', 'rgba(100,60,170,0.6)']}
                 start={[0.5, 0.7]}
                 end={[0.7, 1]}>
-           {(isOnPassword || isOnPersonalDetails) && <BackBtn goBack={goBack}/>}
-            <View>
-            <Text style={styles.title}>{ title() }</Text>
-            </View>
-            {!isOnPersonalDetails && <View style={{marginBottom: 50}}>
-                {!isOnPassword && !isOnPersonalDetails && <NumberInput
-                isSecure={false}
-                cellsCount={10}
-                setValue={setValue} />}
-                {isOnPassword && !isOnPersonalDetails && <NumberInput
-                    isSecure={true}
-                    cellsCount={4}
-                    setValue={setValue} />}
-            </View>}
-            {!isOnPersonalDetails && <View style={{ alignItems: 'center' }}>
-                <NextBtn onPress={onNextBtn} />
-            </View>}
-            {isOnPersonalDetails && <PersonalDetailsRegister newAccount={createNewAcount} />}
+                {(isOnPassword || isOnPersonalDetails) && <BackBtn goBack={goBack} />}
+                <View>
+                    <Text style={styles.title}>{title()}</Text>
+                </View>
+                {!isOnPersonalDetails && <View style={{ marginBottom: 50 }}>
+                    {!isOnPassword && !isOnPersonalDetails && <NumberInput
+                        isSecure={false}
+                        cellsCount={10}
+                        setValue={setValue} />}
+                    {isOnPassword && !isOnPersonalDetails && <NumberInput
+                        isSecure={true}
+                        cellsCount={4}
+                        setValue={setValue} />}
+                </View>}
+                {!isOnPersonalDetails && <View style={{ alignItems: 'center' }}>
+                    <NextBtn onPress={onNextBtn} />
+                </View>}
+                {isOnPersonalDetails && <PersonalDetailsRegister newAccount={createNewAcount} />}
             </LinearGradient>
         </SafeAreaView>
     );
@@ -132,5 +132,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff'
     },
-    title: { textAlign: 'center', fontSize: 30, marginVertical: 50, color: 'white' },
+    title: {
+        textAlign: 'center',
+        fontSize: 30,
+        fontFamily: 'Rubik-Regular',
+        marginVertical: 50,
+        color: 'white'
+    },
 })

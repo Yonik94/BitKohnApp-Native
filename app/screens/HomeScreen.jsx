@@ -16,7 +16,6 @@ export const HomeScreen = (props) => {
     const [username, setUsername] = useState({});
     const transactions = useSelector(state => state.transactions)
     // const [transactions, setTransactions] = useState();
-
     useEffect(() => {
         (async () => {
             const userId = await AsyncStorage.getItem('loggedInUser');
@@ -24,7 +23,6 @@ export const HomeScreen = (props) => {
             setUsername({ ...username, firstName: loggedInUser.firstName, lastName: loggedInUser.lastName });
         })()
     }, [])
-
     return (
         <View style={styles.homeScreen}>
             <LinearGradient
@@ -69,6 +67,7 @@ const styles = StyleSheet.create({
     text: {
         color: 'white',
         fontSize: 20,
+        fontFamily: 'Rubik-SemiBold'
     },
     headerContainer: {
         flexDirection: Localization.isRTL ? 'row-reverse' : 'row',

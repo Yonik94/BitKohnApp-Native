@@ -13,17 +13,17 @@ export const ControllerBtns = (props) => {
             <TouchableWithoutFeedback onPress={navigateToContacts}>
                 <View style={styles.btnContainer}>
                     <View style={[styles.iconContainer, {backgroundColor: '#d32733'}]}>
-                        <Image style={styles.icon} source={require('../assets/icons/send.png')} />
+                        <Image style={[styles.icon, {left: '20%'} ]} source={require('../assets/icons/send.png')} />
                     </View>
-                    <Text style={{ color: 'white', textAlign: 'center' }}>Send Money</Text>
+                    <Text style={styles.text}>Send Money</Text>
                 </View>
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback onPress={navigateToContacts}>
                 <View style={styles.btnContainer}>
                     <View style={[styles.iconContainer, {backgroundColor: '#32ad42'}]}>
-                        <Image style={styles.icon} source={require('../assets/icons/ask.png')} />
+                        <Image style={[styles.icon, {left: '25%'}]} source={require('../assets/icons/ask.png')} />
                     </View>
-                    <Text style={{ color: 'white', textAlign: 'center' }}>Ask Money</Text>
+                    <Text style={styles.text}>Ask Money</Text>
                 </View>
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback onPress={navigateToContacts}>
@@ -31,7 +31,7 @@ export const ControllerBtns = (props) => {
                     <View style={[styles.iconContainer, {backgroundColor: '#429ac8'}]}>
                         <Image style={styles.icon} source={require('../assets/icons/user.png')} />
                     </View>
-                    <Text style={{ color: 'white', textAlign: 'center', }}>Edit Profile</Text>
+                    <Text style={styles.text}>Edit Profile</Text>
                 </View>
             </TouchableWithoutFeedback>
         </View>
@@ -57,12 +57,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: 5,
+        position: 'relative'
     },
-    btnText: {
+    text: {
         color: 'white',
+        textAlign: 'center',
+        fontFamily: 'Rubik-Medium',
     },
     icon: {
         width: 20,
         height: 20,
+        position: 'absolute',
     }
 })

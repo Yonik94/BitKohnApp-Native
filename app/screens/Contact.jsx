@@ -76,40 +76,6 @@ const styles = StyleSheet.create({
     },
     text: {
         color: 'white',
-        fontSize: 20
+        fontSize: 20,
     }
 })
-
-// const mapStateProps = state => {
-//     if (state && state.user && state.user.contacts) {
-//         return {
-//             contacts: state.user.contacts
-//         }
-//     } else {
-//         return { contacts: state }
-//     }
-// }
-// const mapDispatchToProps = {
-//     setContacts
-// }
-
-// export const Contact = connect(mapStateProps, mapDispatchToProps)(_Contact);
-// if (contacts.length > 0) return;
-        // (async () => {
-        //     if (Platform.OS !== 'android') return
-        //     const { status } = await Contacts.requestPermissionsAsync();
-        //     if (status === 'granted') {
-        //         const { data } = await Contacts.getContactsAsync({
-        //             fields: [Contacts.Fields.PhoneNumbers],
-        //         });
-        //         const contactsToUpdate = [];
-        //         if (data.length > 0) {
-        //             data.forEach(contact => {
-        //                 if (contact.phoneNumbers && contact.phoneNumbers[0].number) {
-        //                     contactsToUpdate.push(contact)
-        //                 }
-        //             });
-        //             setContacts(contactsToUpdate);
-        //         }
-        //     }
-        // })();

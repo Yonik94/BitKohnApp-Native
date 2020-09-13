@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
     text: {
         color: 'white',
         fontSize: 20,
+        fontFamily: 'Lato-Black',
         textAlign: 'center',
         marginBottom: 20,
     },

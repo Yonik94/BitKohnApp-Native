@@ -5,15 +5,15 @@ export const NextBtn = (props) => {
     return (
         <TouchableNativeFeedback onPress={props.onPress}>
             <View style={styles.nextBtn}>
-                <Text style={{ fontSize: 20, color: 'white' }}>Next</Text>
+                <Text style={{ fontSize: 20, color: 'white', fontFamily: 'Lato-Black' }}>Next</Text>
             </View>
         </TouchableNativeFeedback>
     );
 }
 const styles = StyleSheet.create({
     nextBtn: {
-        padding: 20,
-        width: 200,
+        padding: 10,
+        width: 300,
         backgroundColor: '#d32733',
         justifyContent: 'center',
         alignItems: 'center',

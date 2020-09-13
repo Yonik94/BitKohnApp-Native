@@ -1,11 +1,12 @@
 import React from 'react';
-import { Text, StyleSheet, SafeAreaView } from "react-native";
+import { Text, StyleSheet, SafeAreaView, Image } from "react-native";
 import * as Localization from 'expo-localization';
 
 export const MainHeader = () => {
     return (
         <SafeAreaView style={styles.headerContainer}>
-            <Text style={styles.logo}>BitKohn</Text>
+            <Image style={styles.logo} source={require('../assets/icons/logo1.png')} />
+            <Text style={styles.text}>BitKohn</Text>
         </SafeAreaView>
     );
 }
@@ -16,10 +17,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         paddingHorizontal: 10,
+        marginTop: 10
+    },
+    text: {
+        fontSize: 30,
+        fontFamily: 'Rubik-SemiBold',
+        color: 'white'
     },
     logo: {
-        fontSize: 40,
-        fontWeight: 'bold',
-        color: 'white'
+        width: 30,
+        height: 30,
+        marginRight: 10
     }
 })

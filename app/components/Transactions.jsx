@@ -13,8 +13,8 @@ export const Transactions = (props) => {
     }
     return (
         <View>
-            <Text style={[styles.text, {marginVertical: 10}]}>
-                BitKohn status:
+            <Text style={[styles.text, {marginTop: 10, marginBottom: 20, fontFamily: 'Rubik-SemiBold'}]}>
+                BitKohn status
                 </Text>
             <FlatList
                 data={props.transactions}
@@ -23,7 +23,7 @@ export const Transactions = (props) => {
                 ListEmptyComponent={() => (
                     <View>
                         <Text style={styles.text}>
-                            You don't have transaction yet
+                            You don't have transactions yet
                     </Text>
                     </View>
                 )}>
@@ -35,6 +35,7 @@ export const Transactions = (props) => {
 const styles = StyleSheet.create({
     text: {
         color: 'white',
-        fontSize: 20
+        fontSize: 20,
+        fontFamily: 'Rubik-Regular',
     },
 })
