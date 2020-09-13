@@ -10,17 +10,18 @@ import { ControllerBtns } from '../components/ControllerBtns'
 import { Transactions } from '../components/Transactions'
 import { userService } from '../services/user.service';
 import { MainHeader } from '../components/MainHeader';
+import { useSelector } from 'react-redux';
 
 export const HomeScreen = (props) => {
     const [username, setUsername] = useState({});
-    const [transactions, setTransactions] = useState();
+    const transactions = useSelector(state => state.transactions)
+    // const [transactions, setTransactions] = useState();
 
     useEffect(() => {
         (async () => {
             const userId = await AsyncStorage.getItem('loggedInUser');
             const loggedInUser = await userService.getUserById(userId);
             setUsername({ ...username, firstName: loggedInUser.firstName, lastName: loggedInUser.lastName });
-            setTransactions(loggedInUser.transactions);
         })()
     }, [])
 

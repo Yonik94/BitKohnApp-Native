@@ -22,7 +22,8 @@ export const userService = {
     getUserById,
     makeTransfer,
     getContacts,
-    getLoggedInUser
+    getLoggedInUser,
+    getTransactions
 }
 
 function getUser(phone) {
@@ -84,17 +85,17 @@ async function makeTransfer(userId, amount, contact) {
     }
     toUser.amount += amount;
     fromUser.amount -= amount;
-    addTransaction(fromUser._id, contact, amount);
+    addTransaction(fromUser._id, toUser._id, contact.name, amount);
 }
 
-async function addTransaction(fromUserId, contact, amount) {
+async function addTransaction(fromUserId, toUserId, name, amount) {
     const fromUser = await getUserById(fromUserId)
-    const toUser = await getUser(contact.phone)
+    const toUser = await getUserById(toUserId)
     const newTrans = {
         "_id": utilService.makeId(),
         "from": `${fromUser.firstName} ${fromUser.lastName}`,
-        "to": contact.phone,
-        "toContactName": contact.name,
+        "to": toUser.phone,
+        "toContactName": name,
         amount,
         "at": Date.now(),
         isConfirmed: false
@@ -121,4 +122,9 @@ async function getLoggedInUser(getLoggedInUser) {
     const user = await getLoggedInUser('loggedInUser')
     return user ? user : undefined
 
+}
+
+async function getTransactions(id) {
+    const user = await getUserById(id);
+    return user ? Promise.resolve(user.transactions) : Promise.reject('err')
 }

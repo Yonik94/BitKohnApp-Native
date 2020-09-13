@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
 import { View, Text, AsyncStorage, StyleSheet } from 'react-native';
 import { TextInput, TouchableNativeFeedback } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as SMS from 'expo-sms';
 
-import { userService } from '../services/user.service'
+import { userService } from '../services/user.service';
+import { getTransactions } from '../actions/UserActions';
 export const Transfers = ({ route, navigation }) => {
+    const dispatch = useDispatch()
     const contactName = route.params.contact.name;
     const [amount, setAmount] = useState('');
     const [password, setPassword] = useState('');
@@ -22,6 +25,7 @@ export const Transfers = ({ route, navigation }) => {
             const userId = await AsyncStorage.getItem('loggedInUser');
             try {
                 await userService.makeTransfer(userId, parseInt(amount).toFixed(2), route.params.contact);
+                await dispatch(getTransactions(userId))
                 await sendSMS()
                 navigation.navigate('Home');
             } catch (err) {
@@ -37,14 +41,11 @@ export const Transfers = ({ route, navigation }) => {
         if (isAvailable) {
             const { result } = await SMS.sendSMSAsync(
                 [route.params.contact.phone],
-                `Hi ${route.params.contact.name},
-                you got $${amount} in BitKohn App.
-                Please download the app and confirm the transfer.
-                If you'll don't confirm it in 72 hours the tranfer will be cancel automatically.
+                `Hi, You got ${amount} coins in BitKohn App. Please download the app and confirm the transfer.
+                If you'll don't confirm it in 72 hours the transfer will be cancel automatically.
                 For downlaod: https://expo.io/@yonik94/bitkohnApp
                 `
             )
-            console.log(result);
         }
     }
     return (
@@ -70,7 +71,6 @@ export const Transfers = ({ route, navigation }) => {
                             placeholder={`0.00`}
                             style={styles.textInput}
                             caretHidden={true}
-
                             onChangeText={text => setAmount(text)}></TextInput>
                         <TouchableNativeFeedback onPress={makeTransfer}>
                             <Text style={[styles.text, styles.button]}>Make a transfer</Text>

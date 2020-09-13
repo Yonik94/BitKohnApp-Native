@@ -16,3 +16,10 @@ export const setContacts = (platform) => {
         dispatch({ type: 'SET_CONTACTS', contacts })
     }
 }
+
+export const getTransactions = (id) => {
+    return async (dispatch) => {
+        const transactions = await userService.getTransactions(id)
+        dispatch({type: 'SET_TRANSACTIONS', transactions}) 
+    }
+}

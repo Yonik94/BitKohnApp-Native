@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Platform, StyleSheet } from "react-native";
-import { connect, useDispatch, useSelector, useStore } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import * as Contacts from 'expo-contacts';
 import { LinearGradient } from 'expo-linear-gradient';
 
