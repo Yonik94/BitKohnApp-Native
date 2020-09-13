@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { View, Text, AsyncStorage, StyleSheet } from 'react-native';
 import { TextInput, TouchableNativeFeedback } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';

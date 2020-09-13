@@ -23,7 +23,6 @@ export const Register = ({ navigation }) => {
     const [user, setUser] = useState({});
     const loggedInUser = useSelector(state => state.loggedInUser);
 
-    // const getLoggedInUser = AsyncStorage.getItem;
     dispatch(setLoggedInUser(AsyncStorage.getItem))
         .then(loggedInUser ?
             navigation.navigate('Home') : navigation.navigate('Register'));

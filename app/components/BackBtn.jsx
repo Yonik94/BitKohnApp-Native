@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
     },
     btn: {
         flexDirection: Localization.isRTL ? 'row' : 'row-reverse',
-        position: 'relative',
         left: 0,
         width: 100,
         alignItems: 'center'

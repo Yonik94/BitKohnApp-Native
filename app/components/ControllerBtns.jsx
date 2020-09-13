@@ -13,7 +13,7 @@ export const ControllerBtns = (props) => {
             <TouchableWithoutFeedback onPress={navigateToContacts}>
                 <View style={styles.btnContainer}>
                     <View style={[styles.iconContainer, {backgroundColor: '#d32733'}]}>
-                        <Image style={[styles.icon, {left: '20%'} ]} source={require('../assets/icons/send.png')} />
+                        <Image style={styles.icon} source={require('../assets/icons/send.png')} />
                     </View>
                     <Text style={styles.text}>Send Money</Text>
                 </View>
@@ -21,7 +21,7 @@ export const ControllerBtns = (props) => {
             <TouchableWithoutFeedback>
                 <View style={styles.btnContainer}>
                     <View style={[styles.iconContainer, {backgroundColor: '#32ad42'}]}>
-                        <Image style={[styles.icon, {left: '25%'}]} source={require('../assets/icons/ask.png')} />
+                        <Image style={styles.icon} source={require('../assets/icons/ask.png')} />
                     </View>
                     <Text style={styles.text}>Ask Money</Text>
                 </View>
@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: 5,
-        position: 'relative'
     },
     text: {
         color: 'white',
@@ -67,6 +66,5 @@ const styles = StyleSheet.create({
     icon: {
         width: 20,
         height: 20,
-        position: 'absolute',
     }
 })
