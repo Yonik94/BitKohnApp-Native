@@ -18,7 +18,7 @@ export const ControllerBtns = (props) => {
                     <Text style={styles.text}>Send Money</Text>
                 </View>
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={navigateToContacts}>
+            <TouchableWithoutFeedback>
                 <View style={styles.btnContainer}>
                     <View style={[styles.iconContainer, {backgroundColor: '#32ad42'}]}>
                         <Image style={[styles.icon, {left: '25%'}]} source={require('../assets/icons/ask.png')} />
@@ -26,7 +26,7 @@ export const ControllerBtns = (props) => {
                     <Text style={styles.text}>Ask Money</Text>
                 </View>
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={navigateToContacts}>
+            <TouchableWithoutFeedback>
                 <View style={styles.btnContainer}>
                     <View style={[styles.iconContainer, {backgroundColor: '#429ac8'}]}>
                         <Image style={styles.icon} source={require('../assets/icons/user.png')} />
