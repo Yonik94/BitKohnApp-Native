@@ -1,5 +1,5 @@
 import { utilService } from './util.service';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, Platform } from 'react-native';
 import * as Contacts from 'expo-contacts';
 
 const gUsers = [
@@ -27,7 +27,7 @@ export const userService = {
 }
 
 async function getUser(phone) {
-    const users = await AsyncStorage.getItem('users');
+    let users = await AsyncStorage.getItem('users');
     if (!users) users = gUsers
     const user = users.find(currUser => currUser.phoneNumber === phone);
     return new Promise((resolve) => {
@@ -110,7 +110,7 @@ async function addTransaction(fromUserId, toUserId, name, amount) {
 }
 
 async function getContacts(platform) {
-    if (platform !== 'android') return []
+    if (platform == 'web') return []
     const { status } = await Contacts.requestPermissionsAsync();
     if (status === 'granted') {
         const { data } = await Contacts.getContactsAsync({
