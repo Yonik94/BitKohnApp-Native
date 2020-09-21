@@ -2,7 +2,7 @@ import { utilService } from './util.service';
 import { AsyncStorage } from 'react-native';
 import * as Contacts from 'expo-contacts';
 
-const users = [
+const gUsers = [
     {
         "_id": '123',
         "firstName": 'Yoni',
@@ -26,7 +26,9 @@ export const userService = {
     getTransactions
 }
 
-function getUser(phone) {
+async function getUser(phone) {
+    const users = await AsyncStorage.getItem('users');
+    if (!users) users = gUsers
     const user = users.find(currUser => currUser.phoneNumber === phone);
     return new Promise((resolve) => {
         (user && user.isRegister) ? resolve(user) : resolve(false)
@@ -62,14 +64,17 @@ async function createUser(user, isRegister, isLogin) {
             "contacts": [],
             "isRegister": isRegister
         }
-        users.push(regUser);
+        gUsers.push(regUser);
     }
-    if (isLogin) AsyncStorage.setItem('loggedInUser', regUser._id);
+    if (isLogin) {
+        AsyncStorage.setItem('loggedInUser', regUser._id);
+        AsyncStorage.setItem('users', gUsers);
+    }
     return Promise.resolve(regUser);
 }
 
 function getUserById(id) {
-    const user = users.find(currUser => currUser._id === id);
+    const user = gUsers.find(currUser => currUser._id === id);
     if (user) {
         return Promise.resolve(user);
     }

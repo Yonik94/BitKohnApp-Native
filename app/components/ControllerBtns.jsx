@@ -3,7 +3,19 @@ import { View, StyleSheet, Image, Text } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import * as Localization from 'expo-localization';
 
+import { ControlBtn } from './controlBtn'
 export const ControllerBtns = (props) => {
+    const bgc = {
+        send: '#d32733',
+        ask: '#32ad42',
+        edit: '#429ac8',
+    }
+    
+    const source = {
+        send: require('../assets/icons/send.png'),
+        ask: require('../assets/icons/ask.png'),
+        edit: require('../assets/icons/user.png'),
+    }
 
     const navigateToContacts = () => {
         props.navigation.navigate('Contact')
@@ -11,28 +23,13 @@ export const ControllerBtns = (props) => {
     return (
         <View style={styles.controllerBtnsContainer}>
             <TouchableWithoutFeedback onPress={navigateToContacts}>
-                <View style={styles.btnContainer}>
-                    <View style={[styles.iconContainer, {backgroundColor: '#d32733'}]}>
-                        <Image style={styles.icon} source={require('../assets/icons/send.png')} />
-                    </View>
-                    <Text style={styles.text}>Send Money</Text>
-                </View>
+                <ControlBtn text="Send Money" bgc={bgc.send} source={source.send}/>
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback>
-                <View style={styles.btnContainer}>
-                    <View style={[styles.iconContainer, {backgroundColor: '#32ad42'}]}>
-                        <Image style={styles.icon} source={require('../assets/icons/ask.png')} />
-                    </View>
-                    <Text style={styles.text}>Ask Money</Text>
-                </View>
+                <ControlBtn text="Ask Money" bgc={bgc.ask} source={source.ask}/>
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback>
-                <View style={styles.btnContainer}>
-                    <View style={[styles.iconContainer, {backgroundColor: '#429ac8'}]}>
-                        <Image style={styles.icon} source={require('../assets/icons/user.png')} />
-                    </View>
-                    <Text style={styles.text}>Edit Profile</Text>
-                </View>
+                <ControlBtn text="Edit Profile" bgc={bgc.edit} source={source.edit}/>
             </TouchableWithoutFeedback>
         </View>
     );
@@ -43,28 +40,5 @@ const styles = StyleSheet.create({
         flexDirection: Localization.isRTL ? 'row-reverse' : 'row',
         alignItems: 'center',
         height: 80,
-    },
-    btnContainer: {
-        width: 100,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginRight: 10,
-    },
-    iconContainer: {
-        width: 40,
-        height: 40,
-        borderRadius: 40 / 2,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 5,
-    },
-    text: {
-        color: 'white',
-        textAlign: 'center',
-        fontFamily: 'Rubik-Medium',
-    },
-    icon: {
-        width: 20,
-        height: 20,
     }
 })
