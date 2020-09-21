@@ -1,5 +1,5 @@
 import { utilService } from './util.service';
-import { AsyncStorage, Platform } from 'react-native';
+import { AsyncStorage } from 'react-native';
 import * as Contacts from 'expo-contacts';
 
 const gUsers = [
@@ -28,6 +28,7 @@ export const userService = {
 
 async function getUser(phone) {
     let users = await AsyncStorage.getItem('users');
+    users = JSON.parse(users);
     if (!users) users = gUsers
     const user = users.find(currUser => currUser.phoneNumber === phone);
     return new Promise((resolve) => {
@@ -66,15 +67,18 @@ async function createUser(user, isRegister, isLogin) {
         }
         gUsers.push(regUser);
     }
-    if (isLogin) {
-        AsyncStorage.setItem('loggedInUser', regUser._id);
-        AsyncStorage.setItem('users', gUsers);
-    }
+    const users = JSON.stringify(gUsers)
+    await AsyncStorage.setItem('users', users);
+    await AsyncStorage.setItem('loggedInUser', regUser._id);
     return Promise.resolve(regUser);
 }
 
-function getUserById(id) {
-    const user = gUsers.find(currUser => currUser._id === id);
+async function getUserById(id) {
+    let users = await AsyncStorage.getItem('users');
+    users = JSON.parse(users)
+    console.log({ users });
+    if (!users) users = gUsers
+    const user = users.find(currUser => currUser._id === id);
     if (user) {
         return Promise.resolve(user);
     }
@@ -126,7 +130,6 @@ async function getContacts(platform) {
 async function getLoggedInUser(getLoggedInUser) {
     const user = await getLoggedInUser('loggedInUser')
     return user ? user : undefined
-
 }
 
 async function getTransactions(id) {

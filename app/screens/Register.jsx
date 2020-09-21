@@ -43,7 +43,7 @@ export const Register = ({ navigation }) => {
                 setIsPassword(false);
                 setValue('');
             } else if (user.firstName && user.lastName) {
-                userService.createUser(user, true, true);
+                await userService.createUser(user, true, true);
                 navigation.navigate('Home');
             }
         })()
